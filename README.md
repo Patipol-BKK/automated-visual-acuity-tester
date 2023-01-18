@@ -14,7 +14,7 @@ Currently the program has 5 available optotypes including:
 
 ### Importing new optotypes
 New optotypes can be imported by converting each symbols into `.svg` and then dragging the folder into `/booth-client/optotypes`. The folder must also include a `config.yml` file with the arcmin height in which the optotype figures should be displayed based on 6/6 vision.
-```
+```yaml
 # Letter height in arcmin
 height: 5
 ```
