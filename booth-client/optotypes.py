@@ -51,7 +51,7 @@ class Optotype:
 # Load Optotypes
 def load_optotypes():
     base_dir = os.getcwd()
-    base_dir = os.path.join(base_dir, 'optotypes')
+    base_dir = os.path.join(base_dir, 'components/optotypes')
     optotypes = {}
     for optotype_name in os.listdir(base_dir):
         optotype_path = os.path.join(base_dir, optotype_name)

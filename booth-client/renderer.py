@@ -64,7 +64,7 @@ class TestScreen:
         str_logMAR = 'logMAR: ' + str(logMAR)
         str_snellen = 'Snellen: ' + snellen_dict[logMAR]
 
-        FONT = 'fonts/' + config['font']
+        FONT = 'components/fonts/' + config['font']
         small_font = pygame.font.Font(FONT, 20)
 
         text = small_font.render(str_optotype, True, (0, 0, 0))
