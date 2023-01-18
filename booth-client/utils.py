@@ -19,14 +19,15 @@ DISPLAY_HEIGHT_DIM = ASPECT_RATIO[1] * math.sqrt(
     DISPLAY_DIAG_DIM**2 / (ASPECT_RATIO[0]**2 + ASPECT_RATIO[1]**2))
 
 
+# Converts length to number of pixels on the display
 def cm_to_pixels(cm):
     return DISPLAY_WIDTH / DISPLAY_WIDTH_DIM * cm
 
-
-def get_figure_size(logMAR, distance):
-    figure_cm = 5.818
-    figure_cm /= 1.2589**((1 - logMAR) / 0.1)
-    return cm_to_pixels(figure_cm) * distance / 4
+# Returns appropriate figure size based on logMAR, distance, and arcmin height
+def get_figure_size(logMAR, distance, arcmin):
+    figure_cm = math.tan(math.radians(arcmin / 60) / 2) * distance * 100 * 2
+    figure_cm /= 1.2589**((0 - logMAR) / 0.1)
+    return cm_to_pixels(figure_cm)
 
 
 snellen_dict = {

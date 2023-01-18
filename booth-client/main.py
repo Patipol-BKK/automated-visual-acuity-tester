@@ -1,102 +1,67 @@
-import ctypes
-import logging
+import os
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 
-import numpy as np
-import OpenGL.GL as gl
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtGui import QOpenGLWindow
-from PyQt5 import QtSvg
+import pygame
+import yaml
+import math
 
+from optotypes import *
+from renderer import *
 
-logger = logging.getLogger(__name__)
+config_stream = open("config.yml", 'r')
+config = yaml.load(config_stream, Loader=yaml.FullLoader)
 
+DISPLAY_WIDTH = config['display']['width']
+DISPLAY_HEIGHT = config['display']['height']
 
-vertex_code = '''
-attribute vec2 position;
-void main()
-{
-  gl_Position = vec4(position, 0.0, 1.0);
-}
-'''
+ASPECT_RATIO = config['display']['aspect_ratio'].split('_')
+ASPECT_RATIO = [int(x) for x in ASPECT_RATIO]
 
-
-fragment_code = '''
-void main()
-{
-  gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
-}
-'''
-
-
-class MinimalGLWidget(QOpenGLWindow):
-    def initializeGL(self):
-        program = gl.glCreateProgram()
-        vertex = gl.glCreateShader(gl.GL_VERTEX_SHADER)
-        fragment = gl.glCreateShader(gl.GL_FRAGMENT_SHADER)
-
-        # Set shaders source
-        gl.glShaderSource(vertex, vertex_code)
-        gl.glShaderSource(fragment, fragment_code)
-
-        # Compile shaders
-        gl.glCompileShader(vertex)
-        if not gl.glGetShaderiv(vertex, gl.GL_COMPILE_STATUS):
-            error = gl.glGetShaderInfoLog(vertex).decode()
-            logger.error("Vertex shader compilation error: %s", error)
-
-        gl.glCompileShader(fragment)
-        if not gl.glGetShaderiv(fragment, gl.GL_COMPILE_STATUS):
-            error = gl.glGetShaderInfoLog(fragment).decode()
-            print(error)
-            raise RuntimeError("Fragment shader compilation error")
-
-        gl.glAttachShader(program, vertex)
-        gl.glAttachShader(program, fragment)
-        gl.glLinkProgram(program)
-
-        if not gl.glGetProgramiv(program, gl.GL_LINK_STATUS):
-            print(gl.glGetProgramInfoLog(program))
-            raise RuntimeError('Linking error')
-
-        gl.glDetachShader(program, vertex)
-        gl.glDetachShader(program, fragment)
-
-        gl.glUseProgram(program)
-
-        # Build data
-        data = np.zeros((4, 2), dtype=np.float32)
-        # Request a buffer slot from GPU
-        buffer = gl.glGenBuffers(1)
-
-        # Make this buffer the default one
-        gl.glBindBuffer(gl.GL_ARRAY_BUFFER, buffer)
-
-        stride = data.strides[0]
-
-        offset = ctypes.c_void_p(0)
-        loc = gl.glGetAttribLocation(program, "position")
-        gl.glEnableVertexAttribArray(loc)
-        gl.glBindBuffer(gl.GL_ARRAY_BUFFER, buffer)
-        gl.glVertexAttribPointer(loc, 2, gl.GL_FLOAT, False, stride, offset)
-
-        # Assign CPU data
-        data[...] = [(-1, +1), (+1, -1), (-1, -1), (+1, -1)]
-
-        # Upload CPU data to GPU buffer
-        gl.glBufferData(
-            gl.GL_ARRAY_BUFFER, data.nbytes, data, gl.GL_DYNAMIC_DRAW)
-
-    def paintGL(self):
-        gl.glClear(gl.GL_COLOR_BUFFER_BIT)
-        gl.glDrawArrays(gl.GL_TRIANGLE_STRIP, 0, 4)
+# Display Dimensions in cm
+DISPLAY_DIAG_DIM = config['display']['screen_size'] * 2.54
+DISPLAY_WIDTH_DIM = ASPECT_RATIO[0] * math.sqrt(
+    DISPLAY_DIAG_DIM**2 / (ASPECT_RATIO[0]**2 + ASPECT_RATIO[1]**2))
+DISPLAY_HEIGHT_DIM = ASPECT_RATIO[1] * math.sqrt(
+    DISPLAY_DIAG_DIM**2 / (ASPECT_RATIO[0]**2 + ASPECT_RATIO[1]**2))
 
 
 if __name__ == '__main__':
-    app = QApplication([])
-    # widget = MinimalGLWidget()
-    # widget.show()
+    pygame.init()
+    display = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
+    pygame.display.set_caption('Visual Acuity Test - Display')
 
-    svgWidget = QtSvg.QSvgWidget('UI/optotypes/sloan/c.svg')
-    svgWidget.setGeometry(50,50,759,668)
-    svgWidget.show()
-    app.exec_()
+    optotypes = load_optotypes()
+
+    crashed = False
+    cur_logMAR = 1
+    cur_optotype = 0
+    update_screen = True
+    while not crashed:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                crashed = True
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    if cur_logMAR < 1:
+                        cur_logMAR = round((cur_logMAR + 0.1) * 10) / 10
+                        update_screen = True
+                if event.key == pygame.K_DOWN:
+                    if cur_logMAR > -0.3:
+                        cur_logMAR = round((cur_logMAR - 0.1) * 10) / 10 
+                        update_screen = True
+
+                if event.key == pygame.K_LEFT:
+                    if cur_optotype > 0:
+                        cur_optotype -= 1
+                        update_screen = True
+                if event.key == pygame.K_RIGHT:
+                    if cur_optotype < len(optotypes) - 1:
+                        cur_optotype += 1
+                        update_screen = True
+
+        if update_screen:
+            display.fill((255, 255, 255))
+            test = TestScreen(list(optotypes.values())[cur_optotype], 1, display)
+            test.render(5, cur_logMAR)
+            update_screen = False
+        pygame.display.update()
