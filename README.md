@@ -1,6 +1,6 @@
 # automated-visual-acuity-tester
  
-Code for Automated Visual Acuity Tester intended for running on Raspberry Pi and a Linux-based server
+This is the code for Automated Visual Acuity Tester intended for running on Raspberry Pi and a Linux-based server. The test is based on testing the examinee's ability to see the optotypes shown on a display by listening the responses through voice commands. Mainly, the Raspberry Pi is responsible for rendering optotypes on the testing display and recording voice signals to be sent to the server for transcription.
 
 ## Testing Standards
 Results for testing are available in both Snellen and logMAR values.
