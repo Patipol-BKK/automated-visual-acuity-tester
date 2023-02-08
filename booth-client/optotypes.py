@@ -9,8 +9,8 @@ class Figure:
     def __init__(self, name, svg_string):
         self.name = name
         self.svg_string = svg_string
-        self.pygame_img = pygame.image.load(io.BytesIO(svg_string.encode()))
-        self.size = self.pygame_img.get_size()
+        pygame_img = pygame.image.load(io.BytesIO(svg_string.encode()))
+        self.size = pygame_img.get_size()
 
     # Returns a pygame surface with the given height in pixels
     def render(self, height):

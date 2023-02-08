@@ -24,7 +24,6 @@ DISPLAY_WIDTH_DIM = ASPECT_RATIO[0] * math.sqrt(
 DISPLAY_HEIGHT_DIM = ASPECT_RATIO[1] * math.sqrt(
     DISPLAY_DIAG_DIM**2 / (ASPECT_RATIO[0]**2 + ASPECT_RATIO[1]**2))
 
-
 if __name__ == '__main__':
     pygame.init()
     display = pygame.display.set_mode((DISPLAY_WIDTH, DISPLAY_HEIGHT))
@@ -35,7 +34,11 @@ if __name__ == '__main__':
     crashed = False
     cur_logMAR = 1
     cur_optotype = 0
+    cur_pointed = -1
     update_screen = True
+    update_optotypes = True
+
+    test = TestScreen(list(optotypes.values())[cur_optotype], 2, 5, cur_logMAR, display)
     while not crashed:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -45,23 +48,44 @@ if __name__ == '__main__':
                     if cur_logMAR < 1:
                         cur_logMAR = round((cur_logMAR + 0.1) * 10) / 10
                         update_screen = True
+                        update_optotypes = True
                 if event.key == pygame.K_DOWN:
                     if cur_logMAR > -0.3:
                         cur_logMAR = round((cur_logMAR - 0.1) * 10) / 10 
                         update_screen = True
+                        update_optotypes = True
 
                 if event.key == pygame.K_LEFT:
                     if cur_optotype > 0:
                         cur_optotype -= 1
                         update_screen = True
+                        update_optotypes = True
                 if event.key == pygame.K_RIGHT:
                     if cur_optotype < len(optotypes) - 1:
                         cur_optotype += 1
                         update_screen = True
+                        update_optotypes = True
+
+                if event.key == pygame.K_SPACE:
+                    update_screen = True
+                    update_optotypes = True
+
+                if event.key == pygame.K_a:
+                    if cur_pointed > -1:
+                        cur_pointed -= 1
+                    update_screen = True
+                if event.key == pygame.K_d:
+                    if cur_pointed < len(optotypes) - 1:
+                        cur_pointed += 1
+                    else:
+                        cur_pointed = -1
+                    update_screen = True
 
         if update_screen:
             display.fill((255, 255, 255))
-            test = TestScreen(list(optotypes.values())[cur_optotype], 1, display)
-            test.render(5, cur_logMAR)
+            if update_optotypes:
+                test = TestScreen(list(optotypes.values())[cur_optotype], 2, 5, cur_logMAR, display)
+                update_optotypes = False
+            test.render(cur_pointed)
             update_screen = False
         pygame.display.update()
