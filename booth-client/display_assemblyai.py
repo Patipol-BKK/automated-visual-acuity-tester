@@ -92,6 +92,10 @@ if __name__ == '__main__':
     update_screen = True
     update_optotypes = True
 
+    scores = {}
+    for logMAR in snellen_dict:
+        scores[logMAR] = 0
+
     prev = '_'
     current_score = 0
     figures = []
