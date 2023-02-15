@@ -113,3 +113,5 @@ class TestScreen:
         text = small_font.render(str_scale, True, (0, 0, 0))
         self.display.blit(text, text.get_rect(center=(
             DISPLAY_WIDTH - 40 - cm_to_pixels(scale_length) / 2, DISPLAY_HEIGHT - 45)))
+
+        return self.line.figures

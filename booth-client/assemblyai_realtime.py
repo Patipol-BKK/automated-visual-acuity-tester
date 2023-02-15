@@ -68,8 +68,9 @@ async def send_receive():
 			while True:
 				try:
 					result_str = await _ws.recv()
-					# print(json.loads(result_str)['text'])
-					print(json.loads(result_str))
+					print(json.loads(result_str)['text'])
+					
+					# print(json.loads(result_str))
 					# return True
 					# if json.loads(result_str)['text'] != '':
 					# 	return json.loads(result_str)['text']
