@@ -4,6 +4,9 @@ import base64
 import json
 from configure import auth_key
 from windows_pipe import pipe_server_init, pipe_server_send, pipe_server_close
+import numpy as np
+from matplotlib import pyplot as plt
+from urllib.parse import urlencode
 
 import pyaudio
  
@@ -23,7 +26,13 @@ stream = p.open(
 )
  
 # the AssemblyAI endpoint we're going to hit
-URL = "wss://api.assemblyai.com/v2/realtime/ws?sample_rate=16000"
+sample_rate = 16000
+word_boost = ["c", "d", "h", "k", "n", "o", "r", "s", "v", "z"]
+params = {"sample_rate": sample_rate, "word_boost": json.dumps(word_boost)}
+
+URL = f"wss://api.assemblyai.com/v2/realtime/ws?{urlencode(params)}"
+
+# URL = "wss://api.assemblyai.com/v2/realtime/ws?sample_rate=16000"
  
 async def send_receive(pipe):
 
@@ -48,9 +57,12 @@ async def send_receive(pipe):
 			while True:
 				try:
 					data = stream.read(FRAMES_PER_BUFFER)
+					numpydata = np.frombuffer(data, dtype=np.int16)
+
+					loudness = max(np.max(numpydata), -np.min(numpydata))
 					data = base64.b64encode(data).decode("utf-8")
-					json_data = json.dumps({"audio_data":str(data),
-						"word_boost": ["c", "d", "h", "k", "n", "o", "r", "s", "v", "z"]})
+					# print('data', data)
+					json_data = json.dumps({"audio_data":str(data)})
 					await _ws.send(json_data)
 
 				except websockets.exceptions.ConnectionClosedError as e:

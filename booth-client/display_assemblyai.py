@@ -176,7 +176,7 @@ if __name__ == '__main__':
         if update_screen:
             display.fill((255, 255, 255))
             if update_optotypes:
-                test = TestScreen(list(optotypes.values())[cur_optotype], 1, 5, cur_logMAR, display)
+                test = TestScreen(list(optotypes.values())[cur_optotype], 2, 5, cur_logMAR, display)
                 update_optotypes = False
             figures = test.render(cur_pointed)
             update_screen = False

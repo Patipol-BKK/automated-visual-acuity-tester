@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "automated-visual-acuity-tester",
+  "private_key_id": "867aecad4af4f4d902d9727a886e23220ba2304d",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQClG4hKssysKoBZ\n/wSDrDbkRuG4w7d6F7IoUbxBOhCBhDljJ/RmNvmMwrYmR3Mp61Cvd0opcksyBtqY\nKdj+8CJMw0QKxNAYwq0Fg+kqNr6hzH8crFfSo6sKPQR7H7WZZ3inlh71CblvuCg5\nIOr8QHEkWVOMiELMQJD+VcS1i0nTFiPLQ4m5tY5EdesX01RCtJT6RyX6bbcGbPUB\nSAYBBE6chWfYI7QZTpCb4hsz28X4hRFPFSz3AMacRi5bMpuBe7XlnSxU2mdMibD8\nJiH6Ze+5U7OMG5MU8/Z4UVGcbaYE12BauP4uCjiEvRSI2Ea7cJJ6QwBImtAN9pKN\n75qyhfRhAgMBAAECggEADG8b3wBDIK4ct2pYpS/pfFyIMDlxDl1NefLZ2hGs34wd\nJEYEhlQajAq32/8igaQqkeRKbf+hARX6DV6NbHmaI6zK6YKz50F19UXfX+H6jkXP\nxtGF1aOkxGMe/MTBENn1gK1yDGMcl3jHcrHzcGbL/oBJpfo3CZnNMZI0+7UPLLnN\npTcpTc6DM2b8s3hwB0oPXTKanR6CD5PsWe1xvewiHD8wXNkuWF7DCTuJwVXw+EBK\nzLYb05fy7+TED0ZdTvRLATYj4V17qqHVzCKxqW/xjqH2oA/hwWzOuVgNYtxzFyax\n6BEFBg0QaYReTEfQW+rCiqlg7E49qdaD6AfHJl+DHwKBgQDQfQI3zw9LSHPOG7ey\nxTpeHh2guZk3+bC9gPXa6o8oGw7KrWyO6KbDXNUi8U5+65Wz3mZfIVyYZnjZO2Bi\nze9Y4juuEYsItPcY9MEDJSqRNEdesidunyYuNmkzVxFws58koGxfmAJEymWbPtpu\n3nsqKok570PZdwwu46wlRuzx5wKBgQDKu7wlIRh6IC1d4BDDqP2xzWg20MlVyI3Z\neGVF9nyeLIm/efF2SOYTUl45LkLHFFa2KX9KO2uQVCkx9HZoqevbQywdeZJ8il8x\n+lmxnZ9szkKmpcyGHSFckb6wVr6vLbNQ0yyjMuDyykA++v02qvoAAbf7HcJwCXWR\nQXPROIYudwKBgEJ4yN9ATjEDfaCmJ7CAv3ZIhcu7wQUev+H7nudYR6JS1il6l5UM\nyjaZf37vjsZamFVLwDnuahZQ/ZDNJJL786bUIpECGOECyZGUX4GANQ0srOCdToMv\njL3JLUtoJDBZpJDJ8SOdVIPYQAL6TCxzFLPB8hSdm3VXRnQgtL8B2QPbAoGAK6Bg\nqYDIuqcn/BaWpPQ9u8BfF8SwPtSMqeq9qGOVh5hAAENmkbS4RhooipeI6TxYOJUP\nflLxH7rsroJT5MwEJEf9O06JFmHUgHXGTXGE+C4eq6vsKkQkhL4cUego2pu0BcWb\nynbNb5HUZ3ktelEqwUudYt2RlPiEI0D5gmFuhpsCgYEAlJJMJGNtz9w3IBe9nO/Z\nMc+xQ9sgQ0n4mFh9FMrZJQ5zlq96B27aBJMLajA1xcyAWTelDXVnLzQ9dLynPabu\nVoxs6Z9ujc/dX/yPk/NDgvkosPzUYg9fWaw4Csen2X83bf50os1QVkq876nnGhBE\nawIx+Rr+8AdSAHOZIx82xDM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "transcribe-live@automated-visual-acuity-tester.iam.gserviceaccount.com",
+  "client_id": "113368751397164865777",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/transcribe-live%40automated-visual-acuity-tester.iam.gserviceaccount.com"
+}

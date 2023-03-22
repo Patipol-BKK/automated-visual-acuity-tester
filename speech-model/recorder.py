@@ -1,38 +1,12 @@
 import pyaudio
+import sounddevice as sd
+import soundfile as sf
 import wave
+import datetime
+sample_rate = 16000
 
-CHUNK = 1024
-FORMAT = pyaudio.paInt16
-CHANNELS = 2
-RATE = 44100
-RECORD_SECONDS = 0.025
-WAVE_OUTPUT_FILENAME = "output.wav"
-
-p = pyaudio.PyAudio()
-
-stream = p.open(format=FORMAT,
-                channels=CHANNELS,
-                rate=RATE,
-                input=True,
-                frames_per_buffer=CHUNK)
-
-print("* recording")
-
-frames = []
-
-for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-    data = stream.read(CHUNK)
-    frames.append(data)
-
-print("* done recording")
-
-stream.stop_stream()
-stream.close()
-p.terminate()
-
-wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
-wf.setnchannels(CHANNELS)
-wf.setsampwidth(p.get_sample_size(FORMAT))
-wf.setframerate(RATE)
-wf.writeframes(b''.join(frames))
-wf.close()
+filename = f'./local_recordings/a-{datetime.datetime.now().strftime("%Y%m%d-%H%M%S")}.wav'
+print('Start recording')
+mydata = sd.rec(int(60 * sample_rate), samplerate=sample_rate,
+                channels=1, blocking=True)
+sf.write(filename, mydata, sample_rate)

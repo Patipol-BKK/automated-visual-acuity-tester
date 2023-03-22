@@ -7,6 +7,6 @@ display:
   aspect_ratio: "16_9"
 
   # Diagonal display screen size in inches
-  screen_size: 15.6
+  screen_size: 39
 
 font: "Roboto-Regular.ttf"
