@@ -1,7 +1,7 @@
 display:
   # Resolution
-  width: 2560
-  height: 1440
+  width: 1920
+  height: 1080
 
   # Aspect ratio
   aspect_ratio: "16_9"
