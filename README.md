@@ -18,3 +18,5 @@ New optotypes can be imported by converting each symbols into `.svg` and then dr
 # Letter height in arcmin
 height: 5
 ```
+TODO
+- Generate new voice sample from extracting voice clips you e.g. youtube then training a model based on that to produce new alphabetical readings
